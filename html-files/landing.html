@@ -21,11 +21,6 @@
       
       <hr>
     
-<!-- Temp Proof of Concept -->
-<h3>Proof of Concept: Embedding</h3>
-<embed src="../../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
-<a href="../../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
-
       <script>
         $("#pdftest").ready(function ()
         {
@@ -40,13 +35,13 @@
           var uname = document.getElementById("uname").value,
             pword = document.getElementById("pword").value;
           alert(uname + " " + pword);
-          var post = $.post("69.174.137.112:5396", {username: uname,
+          /*var post = $.post("69.174.137.112:5396", {username: uname,
             password: pword});
           post.done(function (data)
           {
             var ret = $(data).find("#content");
             $("#content").empty().append(ret)
-          });
+          });*/
         });
       </script>
   </body>
