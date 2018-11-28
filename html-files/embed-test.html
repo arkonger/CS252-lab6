@@ -1,2 +1,17 @@
-<embed src="../../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
-<a href="../../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
+<html>
+  <head>
+    <title>ResHost</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <embed src="../../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
+    <a href="../../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
+    <script>
+      $("#pdftest").ready(function ()
+      {
+        $("#pdftest").height($(document).height()*.9);
+      });
+    </script>
+  </body>
+</html>
