@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NAME TBD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+    <body>
+      <h1>ResHost 1.0</h1>
+    
+      <hr>
+    
+      <div id="content">
+        <form id="login" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
+          <input type="text" id="uname" placeholder="Username"><br>
+          <input type="text" id="pword" placeholder="Password"><br>
+          <input type="submit" name="submit" value="Login"><br>
+          <a href="account.html">Create an account.</a><br>
+        </form>
+      </div>
+      
+      <hr>
+    
+<!-- Temp Proof of Concept -->
+<h3>Proof of Concept: Embedding</h3>
+<embed src="../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
+<a href="../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
+
+      <script>
+        $("#pdftest").ready(function ()
+        {
+          $("#pdftest").height($(document).height()*.9);
+        });
+
+        $("#login").submit(function ()
+        {
+          alert("asd");
+          event.preventDefault();
+          $.post("", {username: document.getElementById("#uname").value,
+            password: document.getElementById("#pword").value})
+        });
+      </script>
+  </body>
+</html>
