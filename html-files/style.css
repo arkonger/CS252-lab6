@@ -7,5 +7,21 @@ body
 form
 {
   border: 3px solid black;
-  padding: 5px
+  padding: 5px;
+}
+
+.namediv
+{
+  text-align: left;
+}
+
+.name
+{
+  text-align: left;
+  color: blue;
+}
+
+.name:active
+{
+  color: purple;
 }

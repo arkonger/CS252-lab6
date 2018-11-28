@@ -20,8 +20,25 @@
     </div>
     
     <hr>
+
+    <div class="namediv">
+      <a class="name" id="name1"><u>Hello World</u></a><br>
+      <embed src="../../Documents/DnD/Player_s Handbook.pdf" class="pdf" width="90%"
+        type="application/pdf" style="display: none" id="name1pdf"><br>
+    </div>
   
     <script>
+      $(".name").click(function ()
+      {
+        var id = this.id;
+        id += "pdf";
+        var state = document.getElementById(id).style.display;
+        if (state == "none") document.getElementById(id).style.display = "block";
+        else document.getElementById(id).style.display = "none";
+      });
+
+      $(".pdf").height($(document).height()*.9);
+
       $("#login").submit(function (e)
       {
         //TODO: research the protocol requirements
