@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NAME TBD</title>
+    <title>ResHost</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -23,8 +23,8 @@
     
 <!-- Temp Proof of Concept -->
 <h3>Proof of Concept: Embedding</h3>
-<embed src="../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
-<a href="../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
+<embed src="../../Documents/DnD/Player_s Handbook.pdf" id="pdftest" width="90%" type="application/pdf"><br>
+<a href="../../Documents/DnD/Player_s Handbook.pdf">Open file in new tab.</a>
 
       <script>
         $("#pdftest").ready(function ()
@@ -32,12 +32,18 @@
           $("#pdftest").height($(document).height()*.9);
         });
 
-        $("#login").submit(function ()
+        $("#login").submit(function (e)
         {
           alert("asd");
-          event.preventDefault();
-          $.post("", {username: document.getElementById("#uname").value,
-            password: document.getElementById("#pword").value})
+          /*TODO: posting lol
+          e.preventDefault();
+          var post = $.post("69.174.137.112:5796", {username: document.getElementById("#uname").value,
+            password: document.getElementById("#pword").value});
+          post.done(function (data)
+          {
+            var ret = $(data).find("#content");
+            $("#content").empty().append(ret)
+          });*/
         });
       </script>
   </body>
