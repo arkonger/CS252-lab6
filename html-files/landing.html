@@ -43,18 +43,18 @@
       $("#login").submit(function (e)
       {
         //TODO: research the protocol requirements
-        alert("1");
+        //alert("1");
         e.preventDefault();
         var uname = document.getElementById("uname").value,
           pword = document.getElementById("pword").value;
-        alert(uname + " " + pword);
-        /*var post = $.post("69.174.137.112:5396", {username: uname,
+        //alert(uname + " " + pword);
+        var post = $.post("69.174.137.112:5396", {username: uname,
           password: pword});
         post.done(function (data)
         {
           var ret = $(data).find("#content");
           $("#content").empty().append(ret)
-        });*/
+        });
       });
     </script>
   </body>
