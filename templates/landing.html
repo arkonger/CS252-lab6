@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ResHost</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ResHost 1.0</h1>
+  
+    <hr>
+  
+    <div id="content">
+      <form id="login" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
+        <input type="text" id="uname" placeholder="Username"><br>
+        <input type="text" id="pword" placeholder="Password"><br>
+        <input type="submit" name="submit" value="Login"><br>
+        <a href="account.html">Create an account.</a><br>
+      </form>
+    </div>
+    
+    <hr>
+
+    <a class="name" id="name1"><u>Hello World</u></a><br>
+    <div id="name1div" style="display: none">
+      <p style="text-align: left">Description</p>
+      <embed src="../../Documents/DnD/Player_s Handbook.pdf" class="pdf" width="90%"
+        type="application/pdf"><br>
+    </div>
+  
+    <script>
+      $(".name").click(function ()
+      {
+        var id = this.id;
+        id += "div";
+        var state = document.getElementById(id).style.display;
+        if (state == "none") document.getElementById(id).style.display = "block";
+        else document.getElementById(id).style.display = "none";
+      });
+
+      $(".pdf").height($(document).height()*.9);
+
+      $("#login").submit(function (e)
+      {
+        //TODO: research the protocol requirements
+        alert("1");
+        e.preventDefault();
+        var uname = document.getElementById("uname").value,
+          pword = document.getElementById("pword").value;
+        alert(uname + " " + pword);
+        /*var post = $.post("69.174.137.112:5396", {username: uname,
+          password: pword});
+        post.done(function (data)
+        {
+          var ret = $(data).find("#content");
+          $("#content").empty().append(ret)
+        });*/
+      });
+    </script>
+  </body>
+</html>
