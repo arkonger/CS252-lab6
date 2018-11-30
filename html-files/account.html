@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NAME TBD</title>
+    <title>ResHost</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
-    <body>
-      <h1>ResHost 1.0</h1>
+  <body>
+    <h1>ResHost 1.0</h1>
+  
+    <hr>
+  
+    <div id="content">
+      <form id="submit" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
+        <input type="text" id="fname" placeholder="First Name"><br>
+        <input type="text" id="lname" placeholder="Last Name"><br>
+        <input type="text" id="uname" placeholder="Username"><br>
+        <input type="text" id="pword" placeholder="Password"><br>
+        <input type="text" id="confirm" placeholder="Confirm Password"><br>
+        <input type="submit" name="submit" value="Create Account"><br>
+        <a href="landing.html">Already have an account? Sign in.</a><br>
+      </form>
+    </div>
     
-      <hr>
-    
-      <div id="content">
-        <form id="login" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
-          <input type="text" id="uname" placeholder="Username"><br>
-          <input type="text" id="pword" placeholder="Password"><br>
-          <input type="text" id="confirm" placeholder="Confirm Password"><br>
-          <input type="submit" name="submit" value="Create Account"><br>
-          <a href="landing.html">Already have an account? Sign in.</a><br>
-        </form>
-      </div>
-      
-      <hr>
-    
-      <script>
-        $("#login").submit(function ()
+    <hr>
+  
+    <script>
+      $("#submit").submit(function (e)
+      {
+        var host = "http://69.174.137.112:5396";
+
+        e.preventDefault();
+
+        var uname = document.getElementById("uname").value,
+          pword = document.getElementById("pword").value,
+          conf = document.getElementById("conf").value;
+
+        if (pword != conf)
         {
-          alert("asd");
-          event.preventDefault();
-          $.post("", {username: document.getElementById("#uname").value,
-            password: document.getElementById("#pword").value}
+          alert("Passwords do not match!");
+          return;
         }
-      </script>
+
+        var post = $.post(host + "/create-account", {username: uname,
+          password: pword, first-name: fname, last-name: lname});
+        post.done(function (data)
+        {
+          var ret = $(data).find("#content");
+          $("#content").empty().append(ret)
+        });
+      });
+    </script>
   </body>
 </html>

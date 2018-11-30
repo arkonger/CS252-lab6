@@ -50,13 +50,12 @@
 
       $("#login").submit(function (e)
       {
-        //TODO: research the protocol requirements
-        //alert("1");
+        var host = "http://69.174.137.112:5396";
         e.preventDefault();
+
         var uname = document.getElementById("uname").value,
           pword = document.getElementById("pword").value;
-        //alert(uname + " " + pword);
-        var post = $.post("69.174.137.112:5396", {username: uname,
+        var post = $.post(host + "/login", {username: uname,
           password: pword});
         post.done(function (data)
         {
