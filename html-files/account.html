@@ -11,7 +11,8 @@
     <hr>
   
     <div id="content">
-      <form id="submit" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
+      <form id="submit" method="post" style="display: inline-block"
+        width="20%" height="25%" enctype="multipart/form-data"> 
         <input type="text" id="fname" placeholder="First Name"><br>
         <input type="text" id="lname" placeholder="Last Name"><br>
         <input type="text" id="uname" placeholder="Username"><br>
@@ -32,8 +33,20 @@
         e.preventDefault();
 
         var uname = document.getElementById("uname").value,
+          fname = document.getElementById("fname").value,
+          lname = document.getElementById("lname").value,
           pword = document.getElementById("pword").value,
-          conf = document.getElementById("conf").value;
+          conf = document.getElementById("confirm").value;
+
+        if (uname == "" ||
+          fname == "" ||
+          lname == "" ||
+          pword == "" ||
+          conf == "")
+        {
+          alert("Required field is blank!");
+          return;
+        }
 
         if (pword != conf)
         {
@@ -42,7 +55,7 @@
         }
 
         var post = $.post(host + "/create-account", {username: uname,
-          password: pword, first-name: fname, last-name: lname});
+          password: pword, firstname: fname, lastname: lname});
         post.done(function (data)
         {
           var ret = $(data).find("#content");
