@@ -10,6 +10,12 @@ form
   padding: 5px;
 }
 
+input
+{
+  padding: 3px;
+  margin: 3px;
+}
+
 .namediv
 {
   text-align: left;

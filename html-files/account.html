@@ -26,12 +26,10 @@
     <hr>
   
     <script>
+      var host = "http://69.174.137.112:5396";
+
       $("#submit").submit(function (e)
       {
-        var host = "http://69.174.137.112:5396";
-
-        e.preventDefault();
-
         var uname = document.getElementById("uname").value,
           fname = document.getElementById("fname").value,
           lname = document.getElementById("lname").value,
@@ -58,8 +56,25 @@
           password: pword, firstname: fname, lastname: lname});
         post.done(function (data)
         {
+          e.preventDefault();
+
           var ret = $(data).find("#content");
-          $("#content").empty().append(ret)
+          $("#content").empty().append(data);
+        });
+      });
+
+      $("#uploadcontent").submit(function (e)
+      {
+        var filename = document.getElementById("pdfbox").value, 
+          file = document.getElementById("pdfbox").files[0];
+        var post = $.post(host + "/upload", {filename: file.name,
+          size: file.size, file: file});
+        post.done(function (data)
+        {
+          e.preventDefault();
+
+          var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(data);
         });
       });
     </script>
