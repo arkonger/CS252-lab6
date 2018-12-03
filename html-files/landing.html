@@ -51,7 +51,7 @@
 
       $("#login").submit(function (e)
       {
-        var host = "http://69.174.137.112:5396";
+        var host = "http://69.174.137.112:5397";
         e.preventDefault();
 
         var uname = document.getElementById("uname").value,
@@ -68,7 +68,7 @@
           password: pword});
         post.done(function (data)
         {
-          var ret = $(data).find("#content");
+          var ret = $(data).find("#usercontent");
           $("#content").empty().append(ret)
         });
       });
