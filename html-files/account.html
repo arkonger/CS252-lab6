@@ -1,35 +1,82 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NAME TBD</title>
+    <title>ResHost</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
-    <body>
-      <h1>ResHost 1.0</h1>
+  <body>
+    <h1>ResHost 1.0</h1>
+  
+    <hr>
+  
+    <div id="content">
+      <form id="submit" method="post" style="display: inline-block"
+        width="20%" height="25%" enctype="multipart/form-data"> 
+        <input type="text" id="fname" placeholder="First Name"><br>
+        <input type="text" id="lname" placeholder="Last Name"><br>
+        <input type="text" id="uname" placeholder="Username"><br>
+        <input type="text" id="pword" placeholder="Password"><br>
+        <input type="text" id="confirm" placeholder="Confirm Password"><br>
+        <input type="submit" name="submit" value="Create Account"><br>
+        <a href="landing.html">Already have an account? Sign in.</a><br>
+      </form>
+    </div>
     
-      <hr>
-    
-      <div id="content">
-        <form id="login" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
-          <input type="text" id="uname" placeholder="Username"><br>
-          <input type="text" id="pword" placeholder="Password"><br>
-          <input type="text" id="confirm" placeholder="Confirm Password"><br>
-          <input type="submit" name="submit" value="Create Account"><br>
-          <a href="landing.html">Already have an account? Sign in.</a><br>
-        </form>
-      </div>
-      
-      <hr>
-    
-      <script>
-        $("#login").submit(function ()
+    <hr>
+  
+    <script>
+      var host = "http://69.174.137.112:5397";
+
+      $("#submit").submit(function (e)
+      {
+        var uname = document.getElementById("uname").value,
+          fname = document.getElementById("fname").value,
+          lname = document.getElementById("lname").value,
+          pword = document.getElementById("pword").value,
+          conf = document.getElementById("confirm").value;
+
+        if (uname == "" ||
+          fname == "" ||
+          lname == "" ||
+          pword == "" ||
+          conf == "")
         {
-          alert("asd");
-          event.preventDefault();
-          $.post("", {username: document.getElementById("#uname").value,
-            password: document.getElementById("#pword").value}
+          alert("Required field is blank!");
+          return;
         }
-      </script>
+
+        if (pword != conf)
+        {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        var post = $.post(host + "/create-account", {username: uname,
+          password: pword, firstname: fname, lastname: lname});
+        post.done(function (data)
+        {
+          e.preventDefault();
+
+          var ret = $(data).find("#content");
+          $("#content").empty().append(data);
+        });
+      });
+
+      $("#uploadcontent").submit(function (e)
+      {
+        var filename = document.getElementById("pdfbox").value, 
+          file = document.getElementById("pdfbox").files[0];
+        var post = $.post(host + "/upload", {filename: file.name,
+          size: file.size, file: file});
+        post.done(function (data)
+        {
+          e.preventDefault();
+
+          var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(data);
+        });
+      });
+    </script>
   </body>
 </html>
