@@ -12,7 +12,7 @@
   
     <div id="content">
       <form id="submit" method="post" style="display: inline-block"
-        width="20%" height="25%" enctype="multipart/form-data"> 
+        width="20%" height="25%" enctype="multipart/form-data" action="landing.html"> 
         <input type="text" id="fname" placeholder="First Name"><br>
         <input type="text" id="lname" placeholder="Last Name"><br>
         <input type="text" id="uname" placeholder="Username"><br>
@@ -25,11 +25,19 @@
     
     <hr>
   
+<form id="uploadcontent" method="post" style="display: inline-block"
+  width="20%" height="25%" enctype="multipart/form-data">
+  <input type="file" id="pdfbox" style="border: 1px solid black"
+    accept="application/pdf"><br>
+  <input type="submit" id="upload" value="Upload"><br>
+</form>
     <script>
       var host = "http://69.174.137.112:5397";
 
       $("#submit").submit(function (e)
       {
+        e.preventDefault();
+
         var uname = document.getElementById("uname").value,
           fname = document.getElementById("fname").value,
           lname = document.getElementById("lname").value,
@@ -58,22 +66,30 @@
         {
           e.preventDefault();
 
-          var ret = $(data).find("#content");
-          $("#content").empty().append(data);
+          var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(ret);
         });
       });
 
       $("#uploadcontent").submit(function (e)
       {
-        var filename = document.getElementById("pdfbox").value, 
-          file = document.getElementById("pdfbox").files[0];
+        //The file to upload
+        var file = document.getElementById("pdfbox").files[0];
+        //A FileReader to get the file contents
+        var reader = new FileReader();
+        reader.onload = function ()
+        {
+          console.log(reader.result);
+        }
+        reader.readAsBinaryString(file);
+
         var post = $.post(host + "/upload", {filename: file.name,
-          size: file.size, file: file});
+          size: file.size, file: reader.result});
         post.done(function (data)
         {
           e.preventDefault();
 
-          var ret = $(data).find("#uploadcontent");
+          var ret = $(data).find("#content");
           $("#content").empty().append(data);
         });
       });
