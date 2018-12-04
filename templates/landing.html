@@ -11,7 +11,8 @@
     <hr>
   
     <div id="content">
-      <form id="login" action="unauth.html" method="post" style="display: inline-block" width="20%" height="25%"> 
+      <form id="login" action="unauth.html" method="post" style="display: inline-block"
+        width="20%" height="25%" enctype="multipart/form-data">
         <input type="text" id="uname" placeholder="Username"><br>
         <input type="text" id="pword" placeholder="Password"><br>
         <input type="submit" name="submit" value="Login"><br>
@@ -21,20 +22,30 @@
     
     <hr>
 
-    <a class="name" id="name1"><u>Hello World</u></a><br>
-    <div id="name1div" style="display: none">
-      <p style="text-align: left">Description</p>
-      <embed src="./files/Hello World.pdf" class="pdf" width="90%"
-        type="application/pdf"><br>
+    <div id="pdfs">
+      <u><a class="name" id="name1">Hello World</a></u><br>
+      <div id="name1div" style="display: none">
+        <p style="text-align: left">Description</p>
+        <embed class="pdf" width="90%" id="name1pdf" type="application/pdf"><br>
+      </div>
     </div>
   
     <script>
       $(".name").click(function ()
       {
-        var id = this.id;
-        id += "div";
+        var id = this.id + "div";
         var state = document.getElementById(id).style.display;
-        if (state == "none") document.getElementById(id).style.display = "block";
+        if (state == "none")
+        {
+          document.getElementById(id).style.display = "block";
+          /*
+            * TODO: Set it based on post results
+            * For now, it assumes the file name
+            * is the user's name + .pdf
+          */
+
+          document.getElementById(this.id + "pdf").src = "../files/" + this.textContent + ".pdf";
+        }
         else document.getElementById(id).style.display = "none";
       });
 
@@ -42,19 +53,36 @@
 
       $("#login").submit(function (e)
       {
-        //TODO: research the protocol requirements
-        //alert("1");
+        var host = "http://69.174.137.112:5397";
         e.preventDefault();
+
         var uname = document.getElementById("uname").value,
           pword = document.getElementById("pword").value;
-        //alert(uname + " " + pword);
-        var post = $.post("69.174.137.112:5396", {username: uname,
+
+        if (uname == "" ||
+          pword == "")
+        {
+          alert("Required field is blank!");
+          return;
+        }
+        
+        var post = $.post(host + "/login", {username: uname,
           password: pword});
         post.done(function (data)
         {
-          var ret = $(data).find("#content");
+          var ret = $(data).find("#usercontent");
           $("#content").empty().append(ret)
         });
+      });
+
+      $("document").ready(function ()
+      {
+        alert("Page loaded");
+        <u><a class="name" id="name1">Hello World</a></u><br>
+        <div id="name1div" style="display: none">
+          <p style="text-align: left">Description</p>
+          <embed class="pdf" width="90%" id="name1pdf" type="application/pdf"><br>
+        </div>
       });
     </script>
   </body>
