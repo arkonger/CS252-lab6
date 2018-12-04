@@ -26,7 +26,7 @@
       <u><a class="name" id="name1">Hello World</a></u><br>
       <div id="name1div" style="display: none">
         <p style="text-align: left">Description</p>
-        <embed class="pdf" width="90%" id="name1pdf" type="application/pdf"><br>
+        <embed class="pdf" width="90%" id="name1pdf" type="application/pdf" src="Hello World.pdf"><br>
       </div>
     </div>
   
@@ -38,13 +38,6 @@
         if (state == "none")
         {
           document.getElementById(id).style.display = "block";
-          /*
-            * TODO: Set it based on post results
-            * For now, it assumes the file name
-            * is the user's name + .pdf
-          */
-
-          document.getElementById(this.id + "pdf").src = "../files/" + this.textContent + ".pdf";
         }
         else document.getElementById(id).style.display = "none";
       });
