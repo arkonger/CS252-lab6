@@ -26,7 +26,8 @@
     <hr>
   
     <script>
-      var host = "http://69.174.137.112:5397";
+      var host = "http://69.174.137.112:5397",
+        username;
 
       $("#submit").submit(function (e)
       {
@@ -61,8 +62,8 @@
           e.preventDefault();
           alert("oh boy-o");
 
-          var ret = $(data).find("#uploadcontent");
-          $("#content").empty().append(ret);
+          //var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(data);
         });
       });
 
