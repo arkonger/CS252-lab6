@@ -2,7 +2,7 @@
 
 Alright bois, here we go for round 6
 
-html stuff in the html file
+html stuff in the templates
 
 keep it organized
 
