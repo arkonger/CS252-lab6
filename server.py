@@ -62,6 +62,20 @@ def accountMaker():
 	print('create pass')
 	return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
 
+@app.route('/create-account/', methods=['POST'])
+def pdfAdder():
+	print('create post')
+	for a1, a2 in request.args:
+		print(a1 + "\t" + a2)
+	print(userExists(request.form.get('username')))
+	if userExists(request.form.get('username')):
+		print('User exists, reading pdf')
+		print(request.form.get('filename'))
+		print(request.form.get('filesize'))
+		return'True'
+	print('create pass')
+	return 'False'
+
 @app.route('/files/<path:path>')
 def serveFile(path):
 	path = path.replace('\\', '', path.count('\\'))

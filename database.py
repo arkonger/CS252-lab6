@@ -121,6 +121,8 @@ def insertUser4(username, password, firstname, lastname):
 
 def sanitizeIn(val):
 	sanVal = val
+	if(sanVal is None):
+		sanVal = ''
 	sanVal = sanVal.replace(';', '', sanVal.count(';'))
 	sanVal = sanVal.replace('\'', '\\\'', sanVal.count('\''))
 	sanVal = sanVal.replace('"', '\\"', sanVal.count('"'))
