@@ -2,5 +2,5 @@
   width="20%" height="25%" enctype="multipart/form-data">
   <input type="file" id="pdfbox" style="border: 1px solid black"
     accept="application/pdf"><br>
-  <input type="submit" name="uploadsubmit" value="Upload"><br>
+  <input type="submit" name="upload" value="Upload"><br>
 </form>
