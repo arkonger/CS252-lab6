@@ -39,6 +39,8 @@
           pword = document.getElementById("pword").value,
           conf = document.getElementById("confirm").value;
 
+        username = uname;
+
         if (uname == "" ||
           fname == "" ||
           lname == "" ||
@@ -79,8 +81,8 @@
         }
         reader.readAsBinaryString(file);
 
-        var post = $.post(host + "/upload", {filename: file.name,
-          size: file.size, file: reader.result});
+        var post = $.post(host + "/upload", {username: username,
+          filename: file.name, size: file.size, file: reader.result});
         post.done(function (data)
         {
           e.preventDefault();
