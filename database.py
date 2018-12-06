@@ -39,22 +39,56 @@ def deleteUser(username):
 	cursor.close()
 	cnx.close()
 
+def getLocale(username):
+	localeQuery = "SELECT us.RESUME_LOCALE from RESUME.USERS us WHERE us.USERNAME = '"+sanitizeIn(username)+"';"
+	cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='RESUME', use_pure=False)
+	cursor = cnx.cursor()
+	cursor.execute(userNameQuery)
+	for locale, in cursor:
+		cursor.close()
+		cnx.close()
+		return locale
+	cursor.close()
+	cnx.close()
+	return None
+
 def getMainPage():
 	selectQuery = "SELECT us.USERNAME, us.FIRSTNAME, us.LASTNAME, us.DESCRIPTION, us.RESUME_LOCALE FROM RESUME.USERS us"
 	cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='RESUME', use_pure=False)
 	cursor = cnx.cursor()
 	cursor.execute(selectQuery)
 	htmlDocContents = ''
+	nameID = 0;
 	for username, firstname, lastname, description, resume_locale in cursor:
-		htmlDocContents += htmlWrap(username, firstname, lastname, description, resume_locale)
+		nameID = nameID + 1
+		htmlDocContents += htmlWrap(nameID, username, firstname, lastname, description, resume_locale)
 	cursor.close()
 	cnx.close()
 	return htmlDocContents;
 
-def htmlWrap(username, firstname, lastname, description, resume_locale):
-	html = "<"
-	print(username+'\t|\t'+firstname+'\t|\t'+lastname+'\t|\t'+description+'\t|\t'+resume_locale)
-	html += ">"
+def htmlWrap(nameID, username, firstname, lastname, description, resume_locale):
+	html = '<u><a class="name" id="name'
+	html += str(nameID)
+	html += '">'
+	html += username
+	html += '</a></u><br><div id="name'
+	html += str(nameID)
+	html += 'div" style="display: none"><p style="text-align: left">'
+	html += firstname
+	html += " "
+	html += lastname
+	html += '<br>Description:'
+	if description is not None:
+		html += description
+	html += '</p><embed class="pdf" width="90%" id="name'
+	html += str(nameID)
+	html += 'pdf" type="application/pdf" src="files/'
+	if resume_locale is not None:
+		html += resume_locale
+	else:
+		html += 'Hello World.pdf'
+	html += '"><br></div>'
+	#print(html)
 	return html
 
 def userExists(username):
@@ -85,9 +119,6 @@ def userPassExists(username, password):
 	cnx.close()
 	return False
 
-	
-
-
 def insertUser6(username, password, firstname, lastname, description, resume_locale):
 	insertQuery = "INSERT INTO USERS(USERNAME, PASSWORD, FIRSTNAME, LASTNAME, DESCRIPTION, RESUME_LOCALE) VALUES('$username', '$password', '$firstname', '$lastname', '$description', '$resume_locale');"
 	insertQuery = insertQuery.replace('$username', sanitizeIn(username), 1)
@@ -104,7 +135,6 @@ def insertUser6(username, password, firstname, lastname, description, resume_loc
 	cursor.close()
 	cnx.close()
 	#print('exit "insertUser()"')
-
 
 def insertUser4(username, password, firstname, lastname):
 	insertQuery = "INSERT INTO USERS(USERNAME, PASSWORD, FIRSTNAME, LASTNAME) VALUES('$username', '$password', '$firstname', '$lastname');"
@@ -123,6 +153,7 @@ def sanitizeIn(val):
 	sanVal = val
 	if(sanVal is None):
 		sanVal = ''
+	sanVal = sanVal.replace('\\', '', sanVal.count('\\'))
 	sanVal = sanVal.replace(';', '', sanVal.count(';'))
 	sanVal = sanVal.replace('\'', '\\\'', sanVal.count('\''))
 	sanVal = sanVal.replace('"', '\\"', sanVal.count('"'))

@@ -48,7 +48,7 @@ def loginU():
 	print('login post')
 	if userPassExists(request.form.get('username'), request.form.get('password')):
 		print('auth checked out')
-		return 'True'
+		return send_file('templates/data/upload.txt')
 	print('login pass')
 	return 'False'#send_file('templates/data/upload.txt')
 	
@@ -60,7 +60,8 @@ def accountMaker():
 		insertUser4(request.form.get('username'), request.form.get('password'), request.form.get('firstname'), request.form.get('lastname'))
 		print('user Inserted')
 	print('create pass')
-	return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
+	return send_file('templates/data/upload.txt')
+	#return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
 
 @app.route('/create-account/', methods=['POST'])
 def pdfAdder():
@@ -86,7 +87,10 @@ def serveFile(path):
 
 @app.route('/')
 def index1():
-	return render_template('landing.html')
+	f = open('templates/landing.html','r')
+	fileContent = f.read()
+	fileContent = fileContent.replace('$REPLACE_WITH_USER_LIST', getMainPage())
+	return fileContent
 
 @app.route('/create-account/')
 def index2():
@@ -101,5 +105,3 @@ def styleCA():
 
 if __name__ == '__main__':
 	app.run(debug=True, host='192.168.1.139', port='5397')
-	
-
