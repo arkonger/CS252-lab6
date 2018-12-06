@@ -62,7 +62,6 @@
         post.done(function (data)
         {
           e.preventDefault();
-          alert("oh boy-o");
 
           //var ret = $(data).find("#uploadcontent");
           $("#content").empty().append(data);
@@ -71,6 +70,7 @@
 
       $("#uploadcontent").submit(function (e)
       {
+        alert("oh boy-o");
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
         //A FileReader to get the file contents
