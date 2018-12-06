@@ -19,7 +19,7 @@
         <input type="text" id="pword" placeholder="Password"><br>
         <input type="text" id="confirm" placeholder="Confirm Password"><br>
         <input type="submit" name="submit" value="Create Account"><br>
-        <a href="landing.html">Already have an account? Sign in.</a><br>
+        <a href="http://69.174.137.112:5397">Already have an account? Sign in.</a><br>
       </form>
     </div>
     
@@ -38,6 +38,8 @@
           lname = document.getElementById("lname").value,
           pword = document.getElementById("pword").value,
           conf = document.getElementById("confirm").value;
+
+        username = uname;
 
         if (uname == "" ||
           fname == "" ||
@@ -60,15 +62,15 @@
         post.done(function (data)
         {
           e.preventDefault();
-          alert("oh boy-o");
 
           //var ret = $(data).find("#uploadcontent");
           $("#content").empty().append(data);
         });
       });
 
-      $("#uploadcontent").submit(function (e)
+      $("#content").on('submit', '#uploadcontent', function (e)
       {
+        alert("oh boy-o");
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
         //A FileReader to get the file contents
@@ -79,14 +81,14 @@
         }
         reader.readAsBinaryString(file);
 
-        var post = $.post(host + "/upload", {filename: file.name,
-          size: file.size, file: reader.result});
+        var post = $.post(host + "/upload", {username: username,
+          filename: file.name, filesize: file.size, file: reader.result});
         post.done(function (data)
         {
           e.preventDefault();
-
-          var ret = $(data).find("#content");
-          $("#content").empty().append(data);
+          alert("donzo");
+          //var ret = $(data).find("#content");
+          //$("#content").empty().append(data);
         });
       });
     </script>
