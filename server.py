@@ -41,8 +41,12 @@ def index():
 
 
 
-uploadForm = '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
-
+uploadForm = """<form id="uploadcontent" method="post" style="display: inline-block"
+  	width="20%" height="25%" enctype="multipart/form-data">
+  	<input type="file" id="pdfbox" style="border: 1px solid black"
+    	accept="application/pdf"><br>
+  	<input type="submit" name="submit" value="Upload"><br>
+	</form>"""
 @app.route('/login', methods=['POST'])
 def loginU():
 	print('login post')
@@ -60,9 +64,14 @@ def accountMaker():
 		insertUser4(request.form.get('username'), request.form.get('password'), request.form.get('firstname'), request.form.get('lastname'))
 		print('user Inserted')
 	print('create pass')
-	return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
+	return send_file('templates/data/upload.txt') #"""<form id="uploadcontent" method="post" style="display: inline-block"
+  	#width="20%" height="25%" enctype="multipart/form-data">
+  	#<input type="file" id="pdfbox" style="border: 1px solid black"
+    #	accept="application/pdf"><br>
+  	#<input type="submit" name="submit" value="Upload"><br>
+#	</form>"""
 
-@app.route('/create-account/', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def pdfAdder():
 	print('create post')
 	for a1, a2 in request.args:
@@ -76,7 +85,7 @@ def pdfAdder():
 	print('create pass')
 	return 'False'
 
-@app.route('/files/<path:path>')
+@app.route('/<path:path>')
 def serveFile(path):
 	path = path.replace('\\', '', path.count('\\'))
 	path = path.replace('%20', ' ', path.count('%20'))
