@@ -63,8 +63,8 @@
         {
           e.preventDefault();
 
-          //var ret = $(data).find("#uploadcontent");
-          $("#content").empty().append(data);
+          var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(ret);
         });
       });
 
