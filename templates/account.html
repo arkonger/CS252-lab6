@@ -63,9 +63,9 @@
         {
           e.preventDefault();
 
-          var ret = $(data).find("#uploadcontent");
-          alert(ret.tagName);
-          $("#content").empty().append(ret);
+          //var ret = $(data).find("#uploadcontent");
+          $(data).style("display: none");
+          $("#content").empty().append(data);
         });
       });
 
