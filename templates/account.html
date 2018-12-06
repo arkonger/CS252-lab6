@@ -63,9 +63,8 @@
         {
           e.preventDefault();
 
-          //var ret = $(data).find("#uploadcontent");
-          $(data).find("h3").css("display", "none");
-          $("#content").empty().append(data);
+          var ret = $(data).find("#uploadcontent");
+          $("#content").empty().append(ret);
         });
       });
 
