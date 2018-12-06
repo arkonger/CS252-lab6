@@ -1,7 +1,9 @@
-<form id="uploadcontent" method="post" style="display: inline-block"
-  width="20%" height="25%" enctype="multipart/form-data">
-  <input type="file" id="pdfbox" style="border: 1px solid black"
-    accept="application/pdf"><br>
-  <input type="submit" id="upload" value="Upload"><br>
-</form>
-<h3>test</h3>
+<div id="test">
+  <form id="uploadcontent" method="post" style="display: inline-block"
+    width="20%" height="25%" enctype="multipart/form-data">
+    <input type="file" id="pdfbox" style="border: 1px solid black"
+      accept="application/pdf"><br>
+    <input type="submit" id="upload" value="Upload"><br>
+  </form>
+  <h3>test</h3>
+</div>
