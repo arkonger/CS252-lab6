@@ -74,7 +74,7 @@
       {
         var data = new FormData(document.getElementById("uploadcontent"));
         data.append("username", username);
-        alert("sending");
+        alert(data.get("file"));
         $.ajax({
           url: host + "/upload",
           method: "POST",
