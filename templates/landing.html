@@ -74,9 +74,13 @@
       {
         var data = new FormData(document.getElementById("uploadcontent"));
         data.append("username", username);
-        var sender = new XMLHttpRequest();
-        sender.open("POST", host + "/upload", true);
-        sender.send(data);
+        $.ajax({
+          url: host + "/upload",
+          method: "POST",
+          contentType: "multipart/form-data",
+          data: data,
+          processData: false
+        });
       });
     </script>
   </body>
