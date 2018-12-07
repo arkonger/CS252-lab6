@@ -64,10 +64,35 @@
         post.done(function (data)
         {
           $("#content").empty().append(data);
+          $("#content").find("#uploadcontent").prepend(
+            "Upload a different file:");
         });
       });
       
       //TODO: add js for user actions
+      $("#content").on('submit', '#uploadcontent', function (e)
+      {
+        alert("oh boy-o");
+        //The file to upload
+        var file = document.getElementById("pdfbox").files[0];
+        //A FileReader to get the file contents
+        var reader = new FileReader();
+        reader.onload = function ()
+        {
+          console.log(reader.result);
+        }
+        reader.readAsBinaryString(file);
+
+        var post = $.post(host + "/upload", {username: username,
+          filename: file.name, filesize: file.size, file: reader.result});
+        post.done(function (data)
+        {
+          e.preventDefault();
+          alert("donzo");
+          //var ret = $(data).find("#content");
+          //$("#content").empty().append(data);
+        });
+      });
     </script>
   </body>
 </html>
