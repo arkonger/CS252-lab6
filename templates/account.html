@@ -90,7 +90,7 @@
           url: host + "/upload",
           method: "POST",
           contentType: "multipart/form-data",
-          data: new formData(e.target),
+          data: new formData(document.getElementById("#uploadcontent"),
           username: username
         });
         post.done(function (data)
