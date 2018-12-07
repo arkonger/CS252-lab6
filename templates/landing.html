@@ -80,7 +80,7 @@
         {
           //console.log(reader.result);
         }
-        reader.readAsArrayBuffer(file);
+        reader.readAsDataURL(file);
 
         var post = $.post(host + "/upload", {username: username,
           filename: file.name, filesize: file.size, file: reader.result});
