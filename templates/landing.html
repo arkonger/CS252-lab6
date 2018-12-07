@@ -91,7 +91,7 @@
           //var ret = $(data).find("#content");
           //$("#content").empty().append(data);
         });*/
-        var sender = XMLHttpRequest();
+        var sender = new XMLHttpRequest();
         sender.open("POST", host + "/upload", true);
         sender.send(reader.result);
       });
