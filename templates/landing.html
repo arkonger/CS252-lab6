@@ -76,10 +76,11 @@
         data.append("username", username);
         var keys = data.keys();
         var check = keys.next();
+        alert(check.value + check.done);
         while (!check.done)
         {
-          alert(check.value + check.done);
           check = keys.next();
+          alert(check.value + check.done);
         }
         $.ajax({
           url: host + "/upload",
