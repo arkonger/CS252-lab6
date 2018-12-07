@@ -80,8 +80,16 @@
         }
         reader.readAsBinaryString(file);
 
-        var post = $.post(host + "/upload", {username: username,
-          filename: file.name, filesize: file.size, file: reader.result});
+        /*var post = $.post(host + "/upload", {username: username,
+          filename: file.name, filesize: file.size, file: reader.result});*/
+        var post = $.ajax(
+        {
+          url: host + "/upload",
+          method: "POST",
+          contentType: "application/pdf",
+          data: reader.result,
+          username: username
+        });
         post.done(function (data)
         {
           e.preventDefault();
