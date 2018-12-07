@@ -27,7 +27,8 @@
     </div>
   
     <script>
-      var username;
+      var host = "http://69.174.137.112:5397",
+        username;
 
       $(".name").click(function ()
       {
@@ -44,7 +45,6 @@
 
       $("#login").submit(function (e)
       {
-        var host = "http://69.174.137.112:5397";
         e.preventDefault();
 
         var uname = document.getElementById("uname").value,
@@ -78,7 +78,7 @@
         var reader = new FileReader();
         reader.onload = function ()
         {
-          console.log(reader.result);
+          //console.log(reader.result);
         }
         reader.readAsBinaryString(file);
 
