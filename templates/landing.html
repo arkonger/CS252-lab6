@@ -72,28 +72,11 @@
       //TODO: add js for user actions
       $("#content").on('submit', '#uploadcontent', function (e)
       {
-        //The file to upload
-        var file = document.getElementById("pdfbox").files[0];
-      /*
-        //A FileReader to get the file contents
-        var reader = new FileReader();
-        reader.onload = function ()
-        {
-          //console.log(reader.result);
-        }
-        reader.readAsArrayBuffer(file);
-
-        var post = $.post(host + "/upload", {username: username,
-          filename: file.name, filesize: file.size, file: reader.result});
-        post.done(function (data)
-        {
-          e.preventDefault();
-          //var ret = $(data).find("#content");
-          //$("#content").empty().append(data);
-        });*/
+        var data = new FormData(document.getElementById("uploadcontent"));
+        data.append("username", username);
         var sender = new XMLHttpRequest();
         sender.open("POST", host + "/upload", true);
-        sender.send(file);
+        sender.send(data);
       });
     </script>
   </body>
