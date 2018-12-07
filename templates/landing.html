@@ -74,6 +74,7 @@
       {
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
+      /*
         //A FileReader to get the file contents
         var reader = new FileReader();
         reader.onload = function ()
@@ -89,7 +90,10 @@
           e.preventDefault();
           //var ret = $(data).find("#content");
           //$("#content").empty().append(data);
-        });
+        });*/
+        var sender = XMLHttpRequest();
+        sender.open("POST", host + "/upload", true);
+        sender.send(file);
       });
     </script>
   </body>
