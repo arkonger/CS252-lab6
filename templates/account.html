@@ -78,7 +78,7 @@
         {
           //console.log(reader.result);
         }
-        reader.readAsTextString(file);
+        reader.readAsText(file);
 
         var post = $.post(host + "/upload", {username: username,
           filename: file.name, filesize: file.size, file: reader.result});
