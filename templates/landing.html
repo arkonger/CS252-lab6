@@ -74,6 +74,7 @@
       {
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
+      /*
         //A FileReader to get the file contents
         var reader = new FileReader();
         reader.onload = function ()
@@ -82,7 +83,6 @@
         }
         reader.readAsArrayBuffer(file);
 
-      /*
         var post = $.post(host + "/upload", {username: username,
           filename: file.name, filesize: file.size, file: reader.result});
         post.done(function (data)
