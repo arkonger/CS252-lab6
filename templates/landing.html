@@ -83,7 +83,7 @@
         reader.readAsBinaryString(file);
 
         var post = $.post(host + "/upload", {username: username,
-          filename: file.name, filesize: file.size, file: atob(reader.result)});
+          filename: file.name, filesize: file.size, file: btoa(reader.result)});
         post.done(function (data)
         {
           e.preventDefault();
