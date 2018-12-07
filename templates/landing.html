@@ -89,7 +89,7 @@
         $.ajax({
           url: host + "/upload",
           method: "POST",
-          contentType: "multipart/form-data",
+          contentType: false,
           data: data,
           processData: false
         });
