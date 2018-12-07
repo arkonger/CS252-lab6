@@ -75,10 +75,11 @@
         var data = new FormData(document.getElementById("uploadcontent"));
         data.append("username", username);
         var keys = data.keys();
-        while (!keys.done)
+        var check = keys.next();
+        while (!check.done)
         {
-          alert(keys.value);
-          keys.next();
+          alert(check.value);
+          check = keys.next();
         }
         $.ajax({
           url: host + "/upload",
