@@ -23,14 +23,11 @@
     <hr>
 
     <div id="pdfs">
-      <u><a class="name" id="name1">Hello World</a></u><br>
-      <div id="name1div" style="display: none">
-        <p style="text-align: left">Description</p>
-        <embed class="pdf" width="90%" id="name1pdf" type="application/pdf" src="Hello World.pdf"><br>
-      </div>
     </div>
   
     <script>
+      var username;
+
       $(".name").click(function ()
       {
         var id = this.id + "div";
@@ -52,6 +49,8 @@
         var uname = document.getElementById("uname").value,
           pword = document.getElementById("pword").value;
 
+        username = uname;
+
         if (uname == "" ||
           pword == "")
         {
@@ -65,14 +64,13 @@
         {
           $("#content").empty().append(data);
           $("#content").find("#uploadcontent").prepend(
-            "Upload a different file:");
+            "Upload a different file:<br>");
         });
       });
       
       //TODO: add js for user actions
       $("#content").on('submit', '#uploadcontent', function (e)
       {
-        alert("oh boy-o");
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
         //A FileReader to get the file contents
@@ -88,7 +86,6 @@
         post.done(function (data)
         {
           e.preventDefault();
-          alert("donzo");
           //var ret = $(data).find("#content");
           //$("#content").empty().append(data);
         });

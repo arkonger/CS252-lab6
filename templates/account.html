@@ -68,16 +68,15 @@
         });
       });
 
-      $("#content").on('submit', '#uploadcontent', function (e)
+      $("#content").on("submit", "#uploadcontent", function (e)
       {
-        alert("oh boy-o");
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
         //A FileReader to get the file contents
         var reader = new FileReader();
         reader.onload = function ()
         {
-          console.log(reader.result);
+          //console.log(reader.result);
         }
         reader.readAsBinaryString(file);
 
@@ -86,7 +85,6 @@
         post.done(function (data)
         {
           e.preventDefault();
-          alert("donzo");
           //var ret = $(data).find("#content");
           //$("#content").empty().append(data);
         });
