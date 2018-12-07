@@ -72,8 +72,12 @@
       //TODO: add js for user actions
       $("#content").on('submit', '#uploadcontent', function (e)
       {
-        var data = new FormData(document.getElementById("uploadcontent"));
+        var data = new FormData(),
+          file = document.getElementById("pdfbox").files[0];
         data.append("username", username);
+        data.append("file", file, file.name);
+        data.append("filename", file.name);
+        data.append("filesize", file.size);
         var keys = data.keys();
         var check = keys.next();
         alert(check.value + check.done);
