@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response
-from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage
+from pathlib import Path
+from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response, abort
+from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage, getLocale
 #from werkzeug.utils import secure_filename
 #from PyPDF2 import PdfFileReader, PdfFileWriter
 
@@ -48,7 +49,7 @@ def loginU():
 	print('login post')
 	if userPassExists(request.form.get('username'), request.form.get('password')):
 		print('auth checked out')
-		return 'True'
+		return send_file('templates/data/upload.txt')
 	print('login pass')
 	return 'False'#send_file('templates/data/upload.txt')
 	
@@ -60,7 +61,8 @@ def accountMaker():
 		insertUser4(request.form.get('username'), request.form.get('password'), request.form.get('firstname'), request.form.get('lastname'))
 		print('user Inserted')
 	print('create pass')
-	return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
+	return send_file('templates/data/upload.txt')
+	#return '<form id="uploadcontent" method="post" style="display: inline-block" width="20%" height="25%" enctype="multipart/form-data"> <input type="file" id="pdfbox" style="border: 1px solid black" accept="application/pdf"><br> <input type="submit" id="upload" value="Upload"><br> </form>'
 
 @app.route('/create-account/', methods=['POST'])
 def pdfAdder():
@@ -82,11 +84,25 @@ def serveFile(path):
 	path = path.replace('%20', ' ', path.count('%20'))
 	#path = path.replace('/', '\\/', path.count('/'))
 	print(path)
-	return send_file('files/'+path, attachment_filename=path)
+	if path is not None:
+		if userExists(path):
+			locale = getLocale(path)
+			if locale is not None:
+				fileT = Path('files/'+locale)
+				if fileT.is_file():
+					return send_file('files/'+locale, attachment_filename=locale)
+		else:
+			fileT = Path('files/'+path)
+			if fileT.is_file():
+				return send_file('files/'+path, attachment_filename=path)
+	return abort(404)
 
 @app.route('/')
 def index1():
-	return render_template('landing.html')
+	f = open('templates/landing.html','r')
+	fileContent = f.read()
+	fileContent = fileContent.replace('$REPLACE_WITH_USER_LIST', getMainPage())
+	return fileContent
 
 @app.route('/create-account/')
 def index2():
@@ -99,7 +115,22 @@ def style():
 def styleCA():
 	return send_file('templates/style.css')
 
-if __name__ == '__main__':
-	app.run(debug=True, host='192.168.1.139', port='5397')
+@app.route('/upload', methods = ['GET', 'POST'])
+def upload_file():
+	if request.method == 'POST':
+		print('POSTING')
+		print(request.args)
+		print(request.data)
+		print(request.form)
+		print(request.files)
+		print(request.values)
+		for a1, a2 in request.args:
+			print(a1 + "\t" + a2)
+		#f = request.files['']
+		#f.save(secure_filename(f.filename))
+		return 'Successful'
+		
 	
 
+if __name__ == '__main__':
+	app.run(debug=True, host='192.168.1.139', port='5397')
