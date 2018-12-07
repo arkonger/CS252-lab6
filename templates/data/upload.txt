@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div>
   <form id="uploadcontent" method="post" style="display: inline-block"
     width="20%" height="25%" enctype="multipart/form-data">
@@ -7,3 +8,11 @@
   </form>
   <!--TODO: add user actions-->
 </div>
+=======
+<form id="uploadcontent" method="post" style="display: inline-block"
+  width="20%" height="25%" enctype="multipart/form-data">
+  <input type="file" id="pdfbox" style="border: 1px solid black"
+    accept="application/pdf"><br>
+  <input type="submit" name="upload" value="Upload"><br>
+</form>
+>>>>>>> 2ebecb1f783b93993187b4345778695b57d5280d
