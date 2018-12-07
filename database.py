@@ -43,7 +43,7 @@ def getLocale(username):
 	localeQuery = "SELECT us.RESUME_LOCALE from RESUME.USERS us WHERE us.USERNAME = '"+sanitizeIn(username)+"';"
 	cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='RESUME', use_pure=False)
 	cursor = cnx.cursor()
-	cursor.execute(userNameQuery)
+	cursor.execute(localeQuery)
 	for locale, in cursor:
 		cursor.close()
 		cnx.close()
@@ -70,16 +70,15 @@ def htmlWrap(nameID, username, firstname, lastname, description, resume_locale):
 	html = '<u><a class="name" id="name'
 	html += str(nameID)
 	html += '">'
-	html += username
+	html += firstname + ' ' + lastname
 	html += '</a></u><br><div id="name'
 	html += str(nameID)
 	html += 'div" style="display: none"><p style="text-align: left">'
-	html += firstname
-	html += " "
-	html += lastname
-	html += '<br>Description:'
+	html += 'Description:'
 	if description is not None:
 		html += description
+	else:
+		html += 'None'
 	html += '</p><embed class="pdf" width="90%" id="name'
 	html += str(nameID)
 	html += 'pdf" type="application/pdf" src="files/'

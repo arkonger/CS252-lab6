@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response
-from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage
+from pathlib import Path
+from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response, abort
+from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage, getLocale
 #from werkzeug.utils import secure_filename
 #from PyPDF2 import PdfFileReader, PdfFileWriter
 
@@ -83,7 +84,18 @@ def serveFile(path):
 	path = path.replace('%20', ' ', path.count('%20'))
 	#path = path.replace('/', '\\/', path.count('/'))
 	print(path)
-	return send_file('files/'+path, attachment_filename=path)
+	if path is not None:
+		if userExists(path):
+			locale = getLocale(path)
+			if locale is not None:
+				fileT = Path('files/'+locale)
+				if fileT.is_file():
+					return send_file('files/'+locale, attachment_filename=locale)
+		else:
+			fileT = Path('files/'+path)
+			if fileT.is_file():
+				return send_file('files/'+path, attachment_filename=path)
+	return abort(404)
 
 @app.route('/')
 def index1():
@@ -102,6 +114,23 @@ def style():
 @app.route('/create-account/style.css')
 def styleCA():
 	return send_file('templates/style.css')
+
+@app.route('/upload', methods = ['GET', 'POST'])
+def upload_file():
+	if request.method == 'POST':
+		print('POSTING')
+		print(request.args)
+		print(request.data)
+		print(request.form)
+		print(request.files)
+		print(request.values)
+		for a1, a2 in request.args:
+			print(a1 + "\t" + a2)
+		#f = request.files['']
+		#f.save(secure_filename(f.filename))
+		return 'Successful'
+		
+	
 
 if __name__ == '__main__':
 	app.run(debug=True, host='192.168.1.139', port='5397')
