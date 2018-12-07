@@ -52,6 +52,19 @@ def getLocale(username):
 	cnx.close()
 	return None
 
+def insertLocale(username, locale):
+	localeInsQuery = "UPDATE RESUME.USERS us SET us.RESUME_LOCALE = '"+sanitizeIn(locale)+"'WHERE us.USERNAME = '"+sanitizeIn(username)+"';"
+	print(localeInsQuery)
+	cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='RESUME', use_pure=False)
+	cursor = cnx.cursor()
+	cursor.execute(localeInsQuery)
+	cnx.commit()
+	cursor.close()
+	cnx.close()
+	return True
+
+	
+
 def getMainPage():
 	selectQuery = "SELECT us.USERNAME, us.FIRSTNAME, us.LASTNAME, us.DESCRIPTION, us.RESUME_LOCALE FROM RESUME.USERS us"
 	cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='RESUME', use_pure=False)
@@ -74,7 +87,7 @@ def htmlWrap(nameID, username, firstname, lastname, description, resume_locale):
 	html += '</a></u><br><div id="name'
 	html += str(nameID)
 	html += 'div" style="display: none"><p style="text-align: left">'
-	html += 'Description:'
+	html += 'Description: '
 	if description is not None:
 		html += description
 	else:

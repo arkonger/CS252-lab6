@@ -1,8 +1,10 @@
 import os
+import sys
 from pathlib import Path
-from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response, abort
-from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage, getLocale
-#from werkzeug.utils import secure_filename
+from flask import Flask, render_template, send_file, request, redirect, url_for, send_from_directory, Response, abort, flash
+from werkzeug.utils import secure_filename
+from database import userPassExists, userExists, insertUser4, insertUser6, getMainPage, getLocale, insertLocale
+from werkzeug.utils import secure_filename
 #from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
@@ -47,6 +49,11 @@ uploadForm = '<form id="uploadcontent" method="post" style="display: inline-bloc
 @app.route('/login', methods=['POST'])
 def loginU():
 	print('login post')
+	print(request.args)
+	print(request.data)
+	print(request.form)
+	print(request.files)
+	print(request.values)
 	if userPassExists(request.form.get('username'), request.form.get('password')):
 		print('auth checked out')
 		return send_file('templates/data/upload.txt')
@@ -101,6 +108,7 @@ def serveFile(path):
 def index1():
 	f = open('templates/landing.html','r')
 	fileContent = f.read()
+	#print(getMainPage())
 	fileContent = fileContent.replace('$REPLACE_WITH_USER_LIST', getMainPage())
 	return fileContent
 
@@ -115,21 +123,62 @@ def style():
 def styleCA():
 	return send_file('templates/style.css')
 
-@app.route('/upload', methods = ['GET', 'POST'])
-def upload_file():
+@app.route('/', methods = ['POST'])
+def upload_file_req2():
+	return upload_file(request)
+		
+@app.route('/upload', methods = ['POST'])
+def upload_file_req():
+	return upload_file(request)
+
+def upload_file(request):
 	if request.method == 'POST':
-		print('POSTING')
-		print(request.args)
-		print(request.data)
+		#print(request.args)
+		#print(request.data)
 		print(request.form)
 		print(request.files)
 		print(request.values)
+		print('if1')
+		sys.stdout.flush()
+		if 'file' not in request.files:
+			print('file not found')
+			sys.stdout.flush()
+			#flash('No file part')
+			return 'file not found'#redirect(request.url)
+		file = request.files['file']
+		username = request.form.get('username')
+		sys.stdout.flush()
+		print('if2')
+		if file.filename == '':
+			print('file not given')
+			sys.stdout.flush()
+			#flash('No selected file')
+			return 'file not given'#redirect(request.url)
+		print('if3')
+		if file and allowed_file(file.filename) and username is not None:
+			print('file found and written')
+			sys.stdout.flush()
+			filename = secure_filename(file.filename)
+			file.save(os.path.join('./files/', filename))
+			insertLocale(username, filename)
+			#return redirect('./templates/landing.html')
+			return 'Successful'
+		else:
+			print(file)
+			print(allowed_file(file.filename))
+			print(uesrname is not None)
+		f = open('Hello World.pdf','w')
+		f.write(request.form.get('file'))
+		f.close()
+		print('POSTING')
+		sys.stdout.flush()
 		for a1, a2 in request.args:
 			print(a1 + "\t" + a2)
-		#f = request.files['']
+			sys.stdout.flush()
+		#f = request.files['file']
 		#f.save(secure_filename(f.filename))
+		sys.stdout.flush()
 		return 'Successful'
-		
 	
 
 if __name__ == '__main__':
