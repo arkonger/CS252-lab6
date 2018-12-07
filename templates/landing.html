@@ -78,14 +78,14 @@
         data.append("file", file, file.name);
         data.append("filename", file.name);
         data.append("filesize", file.size);
-        var keys = data.keys();
+        /*var keys = data.keys();
         var check = keys.next();
         alert(check.value + check.done);
         while (!check.done)
         {
           check = keys.next();
           alert(check.value + check.done);
-        }
+        }*/
         $.ajax({
           url: host + "/upload",
           method: "POST",
