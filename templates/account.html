@@ -70,7 +70,6 @@
 
       $("#content").on("submit", "#uploadcontent", function (e)
       {
-        /*
         //The file to upload
         var file = document.getElementById("pdfbox").files[0];
         //A FileReader to get the file contents
@@ -82,17 +81,7 @@
         reader.readAsBinaryString(file);
 
         var post = $.post(host + "/upload", {username: username,
-          filename: file.name, filesize: file.size, file: reader.result});*/
-
-        
-        var post = $.ajax(
-        {
-          url: host + "/upload",
-          method: "POST",
-          contentType: "multipart/form-data",
-          data: new formData(document.getElementById("#uploadcontent")),
-          username: username
-        });
+          filename: file.name, filesize: file.size, file: btoa(reader.result)});
         post.done(function (data)
         {
           e.preventDefault();
