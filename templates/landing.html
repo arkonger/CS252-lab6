@@ -23,14 +23,13 @@
     <hr>
 
     <div id="pdfs">
-      <u><a class="name" id="name1">Hello World</a></u><br>
-      <div id="name1div" style="display: none">
-        <p style="text-align: left">Description</p>
-        <embed class="pdf" width="90%" id="name1pdf" type="application/pdf" src="Hello World.pdf"><br>
-      </div>
+      $REPLACE_WITH_USER_LIST
     </div>
   
     <script>
+      var host = "http://69.174.137.112:5397",
+        username;
+
       $(".name").click(function ()
       {
         var id = this.id + "div";
@@ -46,11 +45,12 @@
 
       $("#login").submit(function (e)
       {
-        var host = "http://69.174.137.112:5397";
         e.preventDefault();
 
         var uname = document.getElementById("uname").value,
           pword = document.getElementById("pword").value;
+
+        username = uname;
 
         if (uname == "" ||
           pword == "")
@@ -63,22 +63,36 @@
           password: pword});
         post.done(function (data)
         {
-          alert("start");
-          //var ret = $(data).find("#usercontent");
           $("#content").empty().append(data);
+          $("#content").find("#uploadcontent").prepend(
+            "Upload a different file:<br>");
         });
       });
-
-      $("document").ready(function ()
+      
+      //TODO: add js for user actions
+      $("#content").on('submit', '#uploadcontent', function (e)
       {
-        alert("Page loaded");
-        /*
-        <u><a class="name" id="name1">Hello World</a></u><br>
-        <div id="name1div" style="display: none">
-          <p style="text-align: left">Description</p>
-          <embed class="pdf" width="90%" id="name1pdf" type="application/pdf"><br>
-        </div>
-        */
+        var data = new FormData(),
+          file = document.getElementById("pdfbox").files[0];
+        data.append("username", username);
+        data.append("file", file, file.name);
+        data.append("filename", file.name);
+        data.append("filesize", file.size);
+        /*var keys = data.keys();
+        var check = keys.next();
+        alert(check.value + check.done);
+        while (!check.done)
+        {
+          check = keys.next();
+          alert(check.value + check.done);
+        }*/
+        $.ajax({
+          url: host + "/upload",
+          method: "POST",
+          contentType: false,
+          data: data,
+          processData: false
+        });
       });
     </script>
   </body>
